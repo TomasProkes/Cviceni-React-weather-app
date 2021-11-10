@@ -1,12 +1,14 @@
 import React from "react";
+import "../../App.css";
+import { getHrsMins, unixTimeToDate } from '../../utils/convert2datetime';
 
 const CurrentWeather = ({weather}) => {
-    if (false) {
+    if (!weather.weather[0]) {
         return null
     } else {
         console.log(weather)
         return (
-        <div className="weather__current">
+        <div className={`weather__current ${weather.main.temp < 10 ? 'weather__current--cold' : ''}`}>
             <h2 className="weather__city" id="mesto">
                 {weather.name}, 
                 {weather.sys.country}
@@ -21,15 +23,11 @@ const CurrentWeather = ({weather}) => {
                     {weather.weather[0].main}
                 </div>
                 </div>
-                <div
-                className="weather__section weather__section--icon"
-                id="ikona"
-                >
-                --
-                <img
-                    src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-                    alt={weather.weather[0].description}
-                    title={weather.weather[0].description}
+                <div className="weather__section weather__section--icon" id="ikona">
+                    <img
+                        src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                        alt={weather.weather[0].description}
+                        title={weather.weather[0].description}
                     />
                 </div>
             </div>
@@ -51,13 +49,13 @@ const CurrentWeather = ({weather}) => {
                 <div className="weather__section">
                 <h3 className="weather__title">Sunrise</h3>
                 <div className="weather__value">
-                    <span id="sunrise">--</span>
+                    <span id="sunrise">{getHrsMins(unixTimeToDate(weather.sys.sunrise))}</span>
                 </div>
                 </div>
                 <div className="weather__section">
                 <h3 className="weather__title">Sunset</h3>
                 <div className="weather__value">
-                    <span id="sunset">--</span>
+                    <span id="sunset">{getHrsMins(unixTimeToDate(weather.sys.sunset))}</span>
                 </div>
                 </div>
             </div>
