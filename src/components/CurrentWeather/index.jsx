@@ -1,5 +1,5 @@
-import React from "react";
-import "../../App.css";
+import React from 'react';
+import '../../App.css';
 import { getHrsMins, unixTimeToDate } from '../../utils/convert2datetime';
 
 const CurrentWeather = ({weather}) => {
