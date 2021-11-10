@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
+import CurrentWeather from "./components/CurrentWeather";
+
 
 const App = () => {
+  
+  const [weather, setWeather] = useState(null)
+  // TODO temporary for testing only
+  const city = 'Prague'
+  // TODO replace with `` placeholder
+  const URL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=metric&appid=' + process.env.REACT_APP_MY_API_ID
+
+  const fetchWeather = () => {
+    fetch(URL)
+    .then(response => response.json())
+    .then(json => {
+      setWeather(json);
+      // TODO remove after debug
+      console.log(json);
+    }
+    )
+  }
+
+  useEffect(() => {
+    fetchWeather();
+  }, []);
+
   return (
     <div className="App">
       <div className="container">
@@ -12,18 +36,22 @@ const App = () => {
             <button className="button">City02</button>
             <button className="button">City03</button>
           </div> */}
+
+          {weather ? <CurrentWeather weather={weather} /> : 'Loading...............'}
+
+          {/* TODO remove below element */}
           <div className="weather__current">
             <h2 className="weather__city" id="mesto">
-              City, Country
+              {city}, {weather && weather.sys.country}
             </h2>
             <div className="weather__inner weather__inner--center">
               <div className="weather__section weather__section--temp">
                 <span className="weather__temp-value" id="teplota">
-                  --
+                  {Math.round(weather && weather.main.temp)}
                 </span>
                 <span className="weather__temp-unit">°C</span>
                 <div className="weather__description" id="popis">
-                  --
+                  {weather && weather.weather[0].main}
                 </div>
               </div>
               <div
@@ -31,10 +59,12 @@ const App = () => {
                 id="ikona"
               >
                 --
-                {/* <img
-                  src={URL FROM OPEN WEATHER}
-                  alt="current weather icon"
-                /> */}
+                {weather ?
+                <img
+                  src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                  alt={weather.weather[0].description}
+                />
+                : null}
               </div>
             </div>
             <div className="weather__inner">
@@ -66,17 +96,18 @@ const App = () => {
               </div>
             </div>
           </div>
-          <div class="weather__forecast" id="predpoved">
-            <div class="forecast">
-              <div class="forecast__day">Day, date</div>
-              <div class="forecast__icon">
+          {/* remove above curr w. element */}
+          <div className="weather__forecast" id="predpoved">
+            <div className="forecast">
+              <div className="forecast__day">Day, date</div>
+              <div className="forecast__icon">
                 {/* <img
                   src={URL FROM OPEN WEATHER}
                   style={{ height: "100%" }}
                   alt="current weather icon"
                 /> */}
               </div>
-              <div class="forecast__temp">-- °C</div>
+              <div className="forecast__temp">-- °C</div>
             </div>
           </div>
         </div>
