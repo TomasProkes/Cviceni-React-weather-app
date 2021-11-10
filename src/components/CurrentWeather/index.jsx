@@ -1,9 +1,10 @@
 import React from "react";
 
-const CurrentWeather = (weather) => {
-    if (!weather.main) {
+const CurrentWeather = ({weather}) => {
+    if (false) {
         return null
     } else {
+        console.log(weather)
         return (
         <div className="weather__current">
             <h2 className="weather__city" id="mesto">
@@ -25,25 +26,24 @@ const CurrentWeather = (weather) => {
                 id="ikona"
                 >
                 --
-                { console.log(`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`) }
                 <img
-                    
                     src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
                     alt={weather.weather[0].description}
-                />
+                    title={weather.weather[0].description}
+                    />
                 </div>
             </div>
             <div className="weather__inner">
                 <div className="weather__section">
                 <h3 className="weather__title">Wind</h3>
                 <div className="weather__value">
-                    <span id="wind">--</span> km/h
+                    <span id="wind">{weather.wind.speed}</span> km/h
                 </div>
                 </div>
                 <div className="weather__section">
                 <h3 className="weather__title">Humidity</h3>
                 <div className="weather__value">
-                    <span id="humidity">--</span> %
+                    <span id="humidity">{weather.main.humidity}</span> %
                 </div>
                 </div>
             </div>
