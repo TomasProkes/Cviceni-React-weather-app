@@ -49,8 +49,9 @@ const App = () => {
 
           {weather ? <CurrentWeather weather={weather} /> : 'Loading.................'}
 
-          {forecast ? (forecast.map((f, index) => <WeatherForecast key={index} forecast={f} />)) : 'Loading.................'}
-          
+          <div className="weather__forecast" id="predpoved">
+            {forecast ? (forecast.map((f, index) => <WeatherForecast key={index} index={index} forecast={f} />)) : 'Loading.................'}
+          </div>
         </div>
       </div>
     </div>

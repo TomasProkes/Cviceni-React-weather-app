@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../App.css';
 
-const WeatherForecast = ({forecast}) => {
+const WeatherForecast = ({forecast, index}) => {
 
     if (!forecast) {
         return null;
@@ -10,7 +10,7 @@ const WeatherForecast = ({forecast}) => {
         console.log(forecast)
         console.log('-----------')
         return (
-        <div className="weather__forecast" id="predpoved">
+        // <div className="weather__forecast" id="predpoved">
             <div className="forecast">
                 <div className="forecast__day">Day, date</div>
                 <div className="forecast__icon">
@@ -20,9 +20,9 @@ const WeatherForecast = ({forecast}) => {
                     alt="current weather icon"
                     />
                 </div>
-                <div className="forecast__temp">{forecast.main.temp} °C</div>
+                <div className="forecast__temp">{Math.round(forecast?.main.temp)} °C</div>
             </div>
-        </div>
+        // </div>
         )
     }
 }
