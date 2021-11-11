@@ -23,19 +23,16 @@ const App = () => {
     .then(json => setWeather(json))
   }
 
-  useEffect(() => {
-    fetchWeather(city);
-  }, [city]);
-
   const fetchForecast = (city) => {
     const URL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${process.env.REACT_APP_MY_API_ID}`
-
+    
     fetch(URL)
     .then(response => response.json())
     .then(json => setForecast(reduceForecasts(json.list)))
   }
-
+  
   useEffect(() => {
+    fetchWeather(city);
     fetchForecast(city);
   }, [city]);
 
@@ -52,7 +49,7 @@ const App = () => {
 
           {weather ? <CurrentWeather weather={weather} /> : 'Loading.................'}
 
-          {forecast ? <WeatherForecast forecast={forecast} /> : 'Loading.................'}
+          {forecast ? (forecast.map((f, index) => <WeatherForecast key={index} forecast={f} />)) : 'Loading.................'}
           
         </div>
       </div>
