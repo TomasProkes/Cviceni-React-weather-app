@@ -1,0 +1,14 @@
+.loading {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.loading-icon {
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-icon img {
+    width: 100%;
+}
