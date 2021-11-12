@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import CurrentWeather from './components/CurrentWeather';
 import WeatherForecast from './components/WeatherForecast';
+import Loading from "./components/Loading";
 import { reduceForecasts } from "./utils/filter";
+import { cities } from "./utils/codelists";
 
 
 const App = () => {
@@ -11,8 +13,12 @@ const App = () => {
   const [forecast, setForecast] = useState(null)
   const [city, setCity] = useState('Hradec Kralove')
 
-  const handleButtonClick = (location) => {
-    setCity(location)
+  // const handleButtonClick = (location) => {
+  //   setCity(location)
+  // }
+
+  const handleSelector = (event) => {
+    setCity(event.target.value)
   }
 
   const fetchWeather = (city) => {
@@ -41,16 +47,31 @@ const App = () => {
       <div className="container">
         <h1>My Weather App</h1>
         <div className="weather">
-          <div className="button-group">
+          <div className="select-wrapper">
+            <select
+              className="select"
+              name="cityselect"
+              id="cityselect"
+              value={city}
+              onChange={handleSelector}
+            >
+              { cities.map((c) =>
+                <option key={c} value={c}>{c}</option>
+              )
+              }
+            </select>
+              )
+          </div>
+          {/* <div className="button-group">
             <button onClick={() => handleButtonClick('Hradec Kralove')} className="button">Hradec Kralove</button>
             <button onClick={() => handleButtonClick('Reykjavik')} className="button">Reykjavik</button>
             <button onClick={() => handleButtonClick('Tenerife')} className="button">Tenerife</button>
-          </div>
+          </div> */}
 
-          {weather ? <CurrentWeather weather={weather} /> : 'Loading.................'}
+          { weather ? <CurrentWeather weather={weather} /> : <Loading /> }
 
           <div className="weather__forecast" id="predpoved">
-            {forecast ? (forecast.map((f, index) => <WeatherForecast key={index} index={index} forecast={f} />)) : 'Loading.................'}
+            { forecast ? (forecast.map((f, index) => <WeatherForecast key={index} forecast={f} />)) : <Loading /> }
           </div>
         </div>
       </div>

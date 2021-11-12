@@ -1,28 +1,25 @@
 import React from 'react';
 import '../../App.css';
+import Loading from '../Loading'
+import { getDayOfWeek, getMonthAndDate } from '../../utils/convert2datetime';
 
-const WeatherForecast = ({forecast, index}) => {
-
+const WeatherForecast = ({forecast}) => {
     if (!forecast) {
-        return null;
+        return <Loading />;
     } else {
-        console.log('PREDPOVED :')
-        console.log(forecast)
-        console.log('-----------')
         return (
-        // <div className="weather__forecast" id="predpoved">
             <div className="forecast">
-                <div className="forecast__day">Day, date</div>
+                <div className="forecast__day">{getDayOfWeek(forecast.dt)}, {getMonthAndDate(forecast.dt)}</div>
                 <div className="forecast__icon">
                     <img
                     src={`http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`}
                     style={{ height: "100%" }}
-                    alt="current weather icon"
+                    alt={forecast.weather[0].main}
+                    title={forecast.weather[0].description}
                     />
                 </div>
-                <div className="forecast__temp">{Math.round(forecast?.main.temp)} °C</div>
+                <div className="forecast__temp">{Math.round(forecast.main.temp)} °C</div>
             </div>
-        // </div>
         )
     }
 }

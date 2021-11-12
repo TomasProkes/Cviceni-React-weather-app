@@ -1,14 +1,20 @@
-export const unixTimeToDate = (unixTime) => {
+const unixTimeToDate = (unixTime) => {
     const epochTime = unixTime * 1000
-    console.log(`Converting epoch time ${epochTime} to date...`)
-    const date = new Date(epochTime)
-    console.log(`Epoch time ${epochTime} corresponds to ${date}.`)
-    return date
+    return new Date(epochTime)
 }
 
-export const getHrsMins = (date) => {
-    console.log(`Parsing hours and minutes from date ${date}.`)
+export const getHrsMins = (unixTime) => {
+    const date = unixTimeToDate(unixTime)
     const [hrs, mins] = [date.getHours(), date.getMinutes()]
-    console.log(`Date ${date} corresponds to ${hrs} hours and ${mins} minutes.`)   
-    return String(hrs).padStart(2, '0') + ':' + String(mins).padStart(2, '0')
+    return String(hrs) + ':' + String(mins).padStart(2, '0')
+}
+
+export const getDayOfWeek = (unixTime) => {
+    const date = unixTimeToDate(unixTime)
+    return date.toDateString().slice(0, 3)
+}
+
+export const getMonthAndDate = (unixTime) => {
+    const date = unixTimeToDate(unixTime)
+    return `${date.getDate()} ${date.toDateString().slice(4, 7)}`
 }
